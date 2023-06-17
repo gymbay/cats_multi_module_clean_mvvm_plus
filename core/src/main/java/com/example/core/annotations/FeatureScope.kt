@@ -3,5 +3,5 @@ package com.example.core.annotations
 import javax.inject.Scope
 
 @Scope
-@Retention
-annotation class Feature
+@Retention(AnnotationRetention.RUNTIME)
+annotation class FeatureScope

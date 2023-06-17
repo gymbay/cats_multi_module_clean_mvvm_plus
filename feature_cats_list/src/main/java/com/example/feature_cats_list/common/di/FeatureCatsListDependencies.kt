@@ -9,7 +9,7 @@ interface FeatureCatsListDependencies {
 
 }
 
-object FeatureCatsListDependenciesStore {
+object FeatureCatsListDependenciesProvider {
 
     var dependencies: FeatureCatsListDependencies by Delegates.notNull()
 
