@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/all"
+        android:enabled="true"
+        android:icon="@drawable/baseline_pets_24"
+        android:title="@string/first_tab_name" />
+
+    <item
+        android:id="@+id/favorites"
+        android:enabled="true"
+        android:icon="@drawable/baseline_favorite_24"
+        android:title="@string/second_tab_name" />
+
+    <item
+        android:id="@+id/add"
+        android:enabled="true"
+        android:icon="@drawable/baseline_add_circle_24"
+        android:title="@string/third_tab_name" />
+
+</menu>

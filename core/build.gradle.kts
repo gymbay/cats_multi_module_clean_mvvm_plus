@@ -33,8 +33,6 @@ android {
 }
 
 dependencies {
-    api(libs.core.ktx)
-    api(libs.app.compat)
-    api(libs.material)
     api(libs.kotlin.coroutines)
+    api(libs.annotations.inject)
 }

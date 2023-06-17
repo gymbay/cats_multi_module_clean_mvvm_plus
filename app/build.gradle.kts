@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.android.kotlin)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
@@ -33,7 +34,17 @@ android {
 }
 
 dependencies {
-    implementation(project(":core"))
+    kapt(libs.dagger.compiler)
+
+    implementation(project(":core_android"))
+
+    implementation(project(":network"))
+    implementation(project(":domain"))
+    implementation(project(":domain_api"))
+    implementation(project(":data"))
+    implementation(project(":data_api"))
+
+    implementation(project(":feature_cats_list"))
 
     testImplementation(libs.test.junit)
 }
