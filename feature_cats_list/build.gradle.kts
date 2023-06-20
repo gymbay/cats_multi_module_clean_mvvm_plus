@@ -41,6 +41,7 @@ dependencies {
 
     implementation(project(":core_android"))
     implementation(project(":domain_api"))
+    implementation(project(":domain_models"))
 
     testImplementation(libs.test.junit)
 }

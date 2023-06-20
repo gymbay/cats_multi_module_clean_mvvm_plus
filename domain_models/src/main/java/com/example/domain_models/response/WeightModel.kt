@@ -1,4 +1,4 @@
-package com.example.domain_api.models.response
+package com.example.domain_models.response
 
 data class WeightModel (
     val imperial: String,

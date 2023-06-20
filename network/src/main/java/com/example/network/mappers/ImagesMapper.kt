@@ -1,9 +1,9 @@
-package com.example.data.mappers
+package com.example.network.mappers
 
-import com.example.domain_api.models.response.BreedModel
-import com.example.domain_api.models.response.CatModel
-import com.example.domain_api.models.response.CategoryModel
-import com.example.domain_api.models.response.WeightModel
+import com.example.domain_models.response.BreedModel
+import com.example.domain_models.response.CatModel
+import com.example.domain_models.response.CategoryModel
+import com.example.domain_models.response.WeightModel
 import com.example.network.models.Breed
 import com.example.network.models.Category
 import com.example.network.models.Image
@@ -11,10 +11,10 @@ import com.example.network.models.Weight
 
 class ImagesMapper {
 
-    fun mapTo(images: List<Image>): List<CatModel> = images.map(::convert)
+    fun mapTo(images: List<Image>): List<com.example.domain_models.response.CatModel> = images.map(::convert)
 
-    private fun convert(image: Image): CatModel {
-        return CatModel(
+    private fun convert(image: Image): com.example.domain_models.response.CatModel {
+        return com.example.domain_models.response.CatModel(
             id = image.id ?: throw error("image.id"),
             url = image.url ?: throw error("image.url"),
             width = image.width ?: throw error("image.width"),
@@ -24,8 +24,8 @@ class ImagesMapper {
         )
     }
 
-    private fun convert(breed: Breed): BreedModel {
-        return BreedModel(
+    private fun convert(breed: Breed): com.example.domain_models.response.BreedModel {
+        return com.example.domain_models.response.BreedModel(
             id = breed.id ?: throw error("breed.id"),
             weight = convert(breed.weight ?: throw error("breed.id")),
             name = breed.name ?: throw error("breed.name"),
@@ -36,15 +36,15 @@ class ImagesMapper {
         )
     }
 
-    private fun convert(category: Category): CategoryModel {
-        return CategoryModel(
+    private fun convert(category: Category): com.example.domain_models.response.CategoryModel {
+        return com.example.domain_models.response.CategoryModel(
             id = category.id ?: throw error("category.id"),
             name = category.name ?: throw error("category.name")
         )
     }
 
-    private fun convert(weight: Weight): WeightModel {
-        return WeightModel(
+    private fun convert(weight: Weight): com.example.domain_models.response.WeightModel {
+        return com.example.domain_models.response.WeightModel(
             imperial = weight.imperial ?: throw error("weight.imperial"),
             metric = weight.metric ?: throw error("weight.metric")
         )

@@ -34,6 +34,9 @@ android {
 
 dependencies {
     implementation(project(":core"))
+    implementation(project(":network_api"))
+    implementation(project(":domain_models"))
+
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
 

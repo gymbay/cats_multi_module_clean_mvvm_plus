@@ -33,5 +33,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":domain_models"))
+
     testImplementation(libs.test.junit)
 }

@@ -1,4 +1,4 @@
-package com.example.domain_api.models.request
+package com.example.domain_models.request
 
 data class CatsFilter(
     val limit: Int,

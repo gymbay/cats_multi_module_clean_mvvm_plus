@@ -39,6 +39,7 @@ dependencies {
     implementation(project(":core_android"))
 
     implementation(project(":network"))
+    implementation(project(":network_api"))
     implementation(project(":domain"))
     implementation(project(":domain_api"))
     implementation(project(":data"))

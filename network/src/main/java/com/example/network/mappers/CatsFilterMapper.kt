@@ -1,10 +1,10 @@
-package com.example.data.mappers
+package com.example.network.mappers
 
-import com.example.domain_api.models.request.CatsFilter
+import com.example.domain_models.request.CatsFilter
 
 class CatsFilterMapper {
 
-    fun mapTo(catsFilter: CatsFilter): Map<String, String> {
+    fun mapTo(catsFilter: com.example.domain_models.request.CatsFilter): Map<String, String> {
         return mutableMapOf(
             "limit" to catsFilter.limit.toString(),
             "page" to catsFilter.page.toString(),

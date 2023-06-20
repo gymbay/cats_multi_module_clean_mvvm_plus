@@ -34,9 +34,9 @@ android {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":network"))
+    implementation(project(":network_api"))
     implementation(project(":data_api"))
-    implementation(project(":domain_api"))
+    implementation(project(":domain_models"))
 
     testImplementation(libs.test.junit)
 }

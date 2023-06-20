@@ -2,29 +2,60 @@ package com.example.feature_cats_list.list.ui
 
 import androidx.lifecycle.viewModelScope
 import com.example.core_android.architecture.BaseViewModel
-import com.example.domain_api.models.request.CatsFilter
-import com.example.domain_api.models.request.Order
-import com.example.domain_api.models.response.CatModel
 import com.example.domain_api.models.usecases.CatsUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class CatsListViewModel @Inject constructor(
+internal class CatsListViewModel @Inject constructor(
     private val catsUseCase: CatsUseCase
-) : BaseViewModel<CatsListViewModel.State, CatsListViewModel.Actions>(State()) {
+) : BaseViewModel<CatsListViewModel.UiState, CatsListViewModel.Actions>(UiState()) {
 
-    fun prepare() {
+    private var currentPage: Int = 0
+    private val limit: Int = 20
+    private var allCatsLoaded: Boolean = false
+
+    init {
+        nextPage()
+    }
+
+    private fun nextPage() {
+        if (allCatsLoaded) return
+
         viewModelScope.launch {
-            val cats = catsUseCase.getCats(CatsFilter(5, 1, Order.DESC))
-            println("Casts size ${cats.size}")
+            modifyState { copy(isLoading = true) }
+
+            try {
+                val currentCats = getState().cats
+                val newCats = catsUseCase.getCats(
+                    com.example.domain_models.request.CatsFilter(
+                        limit,
+                        currentPage,
+                        com.example.domain_models.request.Order.DESC
+                    )
+                )
+
+                if (newCats.isEmpty()) {
+                    allCatsLoaded = true
+                }
+
+                val allCats = currentCats + newCats
+
+                modifyState { copy(cats = allCats) }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                // TODO: - сделать алерт об ошибке
+            }
+
+            modifyState { copy(isLoading = false) }
         }
     }
 
-    data class State(
-        val cats: List<CatModel> = emptyList()
+    data class UiState(
+        val isLoading: Boolean = false,
+        val cats: List<com.example.domain_models.response.CatModel> = emptyList()
     )
 
-    sealed class Actions {
+    sealed interface Actions {
 
     }
 
