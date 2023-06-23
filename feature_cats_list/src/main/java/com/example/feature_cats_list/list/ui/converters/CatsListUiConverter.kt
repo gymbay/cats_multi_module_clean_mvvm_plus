@@ -5,7 +5,7 @@ import com.example.feature_cats_list.list.ui.models.CatListItem
 
 internal class CatsListUiConverter {
 
-    fun convertTo(cats: List<com.example.domain_models.response.CatModel>, isLoading: Boolean): List<CatListItem> {
+    fun convertTo(cats: List<CatModel>, isLoading: Boolean): List<CatListItem> {
         return mutableListOf<CatListItem>().apply {
             addAll(cats.map(::convertTo))
 
@@ -15,7 +15,7 @@ internal class CatsListUiConverter {
         }
     }
 
-    private fun convertTo(cat: com.example.domain_models.response.CatModel): CatListItem =
+    private fun convertTo(cat: CatModel): CatListItem =
         CatListItem.Cat(
             cat.id,
             cat.url

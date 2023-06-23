@@ -3,6 +3,7 @@ package com.example.feature_cats_list.list.ui
 import androidx.lifecycle.viewModelScope
 import com.example.core_android.architecture.BaseViewModel
 import com.example.domain_api.models.usecases.CatsUseCase
+import com.example.domain_models.response.CatModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -52,7 +53,7 @@ internal class CatsListViewModel @Inject constructor(
 
     data class UiState(
         val isLoading: Boolean = false,
-        val cats: List<com.example.domain_models.response.CatModel> = emptyList()
+        val cats: List<CatModel> = emptyList()
     )
 
     sealed interface Actions {

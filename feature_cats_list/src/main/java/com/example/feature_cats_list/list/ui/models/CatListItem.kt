@@ -1,6 +1,8 @@
 package com.example.feature_cats_list.list.ui.models
 
-sealed class CatListItem(open val id: String) {
+import com.example.core_android.deleagates_adapter.holder.CompositeItem
+
+sealed class CatListItem(override val id: String): CompositeItem<String>() {
 
     data class Cat(
         override val id: String,
