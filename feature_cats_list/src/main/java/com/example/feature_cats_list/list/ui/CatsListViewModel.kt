@@ -37,7 +37,7 @@ internal class CatsListViewModel @Inject constructor(
                     CatsFilter(
                         LIMIT,
                         nextPage,
-                        Order.DESC
+                        Order.RAND
                     )
                 )
 
@@ -71,7 +71,6 @@ internal class CatsListViewModel @Inject constructor(
 
         private const val LIMIT = 50
         const val ITEMS_TO_NEXT_PAGE = 20
-        const val SPAN_COUNT = 2
 
     }
 

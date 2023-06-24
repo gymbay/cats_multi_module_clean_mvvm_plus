@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core_android.architecture.collectOnStart
 import com.example.core_android.deleagates_adapter.CompositeAdapter
 import com.example.core_android.deleagates_adapter.CompositePagingAdapter
@@ -60,8 +61,7 @@ internal class CatsListFragment : Fragment() {
             .add(LoadingDelegate())
             .build()
 
-        binding?.rvCats?.layoutManager =
-            GridLayoutManager(requireContext(), CatsListViewModel.SPAN_COUNT)
+        binding?.rvCats?.layoutManager = LinearLayoutManager(requireContext())
         binding?.rvCats?.adapter = adapter
     }
 
