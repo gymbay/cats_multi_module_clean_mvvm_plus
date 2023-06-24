@@ -7,5 +7,5 @@ data class BreedModel(
     val temperament: String,
     val origin: String,
     val description: String,
-    val wikipediaURL: String,
+    val wikipediaURL: String?,
 )

@@ -45,5 +45,7 @@ dependencies {
 
     api(libs.dagger)
 
+    api(libs.coil)
+
     api(project(":core"))
 }
