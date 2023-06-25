@@ -35,7 +35,7 @@ open class CompositeAdapter(
         holder.onBind(currentList[position])
     }
 
-    class CompositeDiffUtil: DiffUtil.ItemCallback<CompositeItem>() {
+    class CompositeDiffUtil : DiffUtil.ItemCallback<CompositeItem>() {
 
         override fun areItemsTheSame(oldItem: CompositeItem, newItem: CompositeItem): Boolean {
             return oldItem.id == newItem.id
@@ -50,19 +50,15 @@ open class CompositeAdapter(
 
     open class Builder {
 
-        protected var delegates: MutableList<CompositeDelegate<*, *>> = mutableListOf()
+        private var delegates: MutableList<CompositeDelegate<*, *>> = mutableListOf()
 
         fun add(delegate: CompositeDelegate<*, *>): Builder {
             delegates.add(delegate)
             return this
         }
 
-        protected open fun checks() {
-            if (delegates.isEmpty()) throw IllegalStateException("Add at least one delegate!")
-        }
-
         open fun build(): CompositeAdapter {
-            checks()
+            if (delegates.isEmpty()) throw IllegalStateException("Add at least one delegate!")
 
             return CompositeAdapter(delegates)
         }

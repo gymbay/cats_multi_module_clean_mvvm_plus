@@ -14,39 +14,31 @@ internal class CatsListViewModel @Inject constructor(
     private val catsUseCase: CatsUseCase
 ) : BaseViewModel<CatsListViewModel.UiState, CatsListViewModel.Actions>(UiState()) {
 
-    private var currentPage: Int = -1
     private var allCatsLoaded: Boolean = false
+    private var loadingJob: Job? = null
 
-    private var listLoadingJob: Job? = null
-
-    init {
-        nextPage()
-    }
-
-    fun nextPage() {
+    fun nextPage(page: Int, pageSize: Int) {
         if (allCatsLoaded) return
-        if (listLoadingJob?.isActive == true) return
+        if (loadingJob?.isActive == true) return
 
-        listLoadingJob = viewModelScope.launch {
+        loadingJob = viewModelScope.launch {
             modifyState { copy(isLoading = true) }
 
             try {
-                val nextPage = currentPage + 1
                 val currentCats = getState().cats
                 val newCats = catsUseCase.getCats(
                     CatsFilter(
-                        LIMIT,
-                        nextPage,
+                        pageSize,
+                        page,
                         Order.RAND
                     )
                 )
 
-                if (newCats.isEmpty()) {
+                if (newCats.size < pageSize) {
                     allCatsLoaded = true
                 }
 
                 val allCats = currentCats + newCats
-                currentPage = nextPage
 
                 modifyState { copy(cats = allCats) }
             } catch (e: Exception) {
@@ -64,13 +56,6 @@ internal class CatsListViewModel @Inject constructor(
     )
 
     sealed interface Actions {
-
-    }
-
-    companion object {
-
-        private const val LIMIT = 50
-        const val ITEMS_TO_NEXT_PAGE = 20
 
     }
 

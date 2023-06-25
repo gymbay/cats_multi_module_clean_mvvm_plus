@@ -5,70 +5,82 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.example.core_android.deleagates_adapter.delegate.CompositeDelegate
 
+typealias PageRequest = (page: Int, pageSize: Int) -> Unit
+
 class CompositePagingAdapter(
     delegates: List<CompositeDelegate<*, *>>,
-    private val onNextPageCallback: () -> Unit,
-    private val itemsToNextPage: Int
+    private val pageSize: Int = DEFAULT_PAGE_SIZE,
+    private val preloadCount: Int = pageSize / 2,
+    private val nextPageRequest: PageRequest
 ) : CompositeAdapter(delegates) {
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
 
-        recyclerView.addOnScrollListener(OnPagingScrollListener(
-            onNextPageCallback,
-            itemsToNextPage
-        ))
-    }
+        recyclerView.addOnScrollListener(object : OnScrollListener() {
 
-    internal class OnPagingScrollListener(
-        private val onNextPageCallback: () -> Unit,
-        private val itemsToNextPage: Int
-    ): OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
 
-        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-            val lastVisibleIndex = layoutManager.findLastVisibleItemPosition()
-            val itemCount = layoutManager.itemCount
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val lastVisibleIndex = layoutManager.findLastVisibleItemPosition()
+                val itemCount = layoutManager.itemCount
 
-            val itemsToEnd = itemCount - lastVisibleIndex + 1
-
-            if (itemsToEnd <= itemsToNextPage) {
-                onNextPageCallback()
+                nextPageHandler(lastVisibleIndex, itemCount)
             }
-        }
 
+        })
+
+        nextPageRequest(0, pageSize)
     }
 
-    class Builder: CompositeAdapter.Builder() {
+    private fun nextPageHandler(lastVisibleIndex: Int, itemsCount: Int) {
+        val lastItems = itemsCount - lastVisibleIndex + 1
+        if (lastItems <= preloadCount) {
+            val nextPage = (itemsCount / pageSize) + 1
+            nextPageRequest(nextPage, pageSize)
+        }
+    }
 
-        private var onNextPageCallback: (() -> Unit)? = null
-        private var itemsToNextPage: Int = 10
+    class Builder(
+        private val nextPageRequest: PageRequest
+    ) {
 
-        fun setOnNextPageCallback(callback: () -> Unit): Builder {
-            onNextPageCallback = callback
+        private var delegates: MutableList<CompositeDelegate<*, *>> = mutableListOf()
+        private var pageSize: Int = DEFAULT_PAGE_SIZE
+        private var preloadCount: Int = pageSize / 2
+
+        fun add(delegate: CompositeDelegate<*, *>): Builder {
+            delegates.add(delegate)
             return this
         }
 
-        fun setItemsToNextPage(count: Int): Builder {
-            if (count <= 0) throw IllegalStateException("itemsToNextPage must be >= 0!")
-            itemsToNextPage = count
+        fun setPageSize(page: Int): Builder {
+            pageSize = page
             return this
         }
 
-        override fun checks() {
-            super.checks()
-            if (onNextPageCallback == null) throw IllegalStateException("NextPageCallback must be set!")
+        fun setPreloadCount(count: Int): Builder {
+            preloadCount = count
+            return this
         }
 
-        override fun build(): CompositeAdapter {
-            checks()
+        fun build(): CompositeAdapter {
+            if (delegates.isEmpty()) throw IllegalStateException("Add at least one delegate!")
 
             return CompositePagingAdapter(
                 delegates,
-                onNextPageCallback!!,
-                itemsToNextPage
+                pageSize,
+                preloadCount,
+                nextPageRequest
             )
         }
+
+    }
+
+    companion object {
+
+        private const val DEFAULT_PAGE_SIZE = 50
 
     }
 
