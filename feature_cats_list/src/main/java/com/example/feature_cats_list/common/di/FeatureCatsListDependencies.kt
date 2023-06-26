@@ -1,6 +1,6 @@
 package com.example.feature_cats_list.common.di
 
-import com.example.domain_api.models.usecases.CatsUseCase
+import com.example.domain_api.usecases.CatsUseCase
 import kotlin.properties.Delegates
 
 interface FeatureCatsListDependencies {

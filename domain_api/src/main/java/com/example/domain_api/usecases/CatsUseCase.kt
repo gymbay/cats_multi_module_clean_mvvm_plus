@@ -1,4 +1,4 @@
-package com.example.domain_api.models.usecases
+package com.example.domain_api.usecases
 
 import com.example.domain_models.request.CatsFilter
 import com.example.domain_models.response.CatModel

@@ -2,7 +2,7 @@ package com.example.feature_cats_list.list.ui
 
 import androidx.lifecycle.viewModelScope
 import com.example.core_android.architecture.BaseViewModel
-import com.example.domain_api.models.usecases.CatsUseCase
+import com.example.domain_api.usecases.CatsUseCase
 import com.example.domain_models.request.CatsFilter
 import com.example.domain_models.request.Order
 import com.example.domain_models.response.CatModel

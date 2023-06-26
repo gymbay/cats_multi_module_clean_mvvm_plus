@@ -42,3 +42,4 @@ android-application = { id = "com.android.application", version.ref = "androidGr
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 android-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "androidKotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "androidKotlin" }
+#kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "androidKotlin" }
