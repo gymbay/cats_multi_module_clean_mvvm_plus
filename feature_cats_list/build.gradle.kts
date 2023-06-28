@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.android.kotlin)
+    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
 }
 
@@ -41,7 +41,7 @@ dependencies {
 
     implementation(project(":core_android"))
     implementation(project(":domain_api"))
-    implementation(project(":domain_models"))
+    implementation(project(":feature_dialogs"))
 
     testImplementation(libs.test.junit)
 }

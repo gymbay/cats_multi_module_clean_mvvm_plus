@@ -1,4 +1,4 @@
-package com.example.core_android.deleagates_adapter.delegate
+package com.example.core_android.delegate_adapter.delegate
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,7 @@ import androidx.viewbinding.ViewBinding
 
 abstract class CompositeDelegate<Item : CompositeItem, Binding : ViewBinding> {
 
-    fun createHolder(inflater: LayoutInflater, parent: ViewGroup): Holder<Item, Binding> {
+    internal fun createHolder(inflater: LayoutInflater, parent: ViewGroup): Holder<Item, Binding> {
         val binding = provideBinding(inflater, parent)
         return Holder(
             binding = binding,
@@ -23,7 +23,7 @@ abstract class CompositeDelegate<Item : CompositeItem, Binding : ViewBinding> {
 
 }
 
-class Holder<Item : CompositeItem, Binding : ViewBinding>(
+internal class Holder<Item : CompositeItem, Binding : ViewBinding>(
     private val binding: Binding,
     private val bindCallback: Binding.(item: Item) -> Unit
 ) : ViewHolder(binding.root) {

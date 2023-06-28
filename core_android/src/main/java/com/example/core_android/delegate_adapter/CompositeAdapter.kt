@@ -1,4 +1,4 @@
-package com.example.core_android.deleagates_adapter
+package com.example.core_android.delegate_adapter
 
 
 import android.annotation.SuppressLint
@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.core_android.deleagates_adapter.delegate.CompositeDelegate
-import com.example.core_android.deleagates_adapter.delegate.CompositeItem
-import com.example.core_android.deleagates_adapter.delegate.Holder
+import com.example.core_android.delegate_adapter.delegate.CompositeDelegate
+import com.example.core_android.delegate_adapter.delegate.CompositeItem
+import com.example.core_android.delegate_adapter.delegate.Holder
 
-open class CompositeAdapter(
+open class CompositeAdapter internal constructor(
     private val delegates: List<CompositeDelegate<*, *>>
-) : ListAdapter<CompositeItem, ViewHolder>(CompositeDiffUtil()) {
+) : ListAdapter<CompositeItem, ViewHolder>(CompositeDiffUtil) {
 
     override fun getItemViewType(position: Int): Int {
         val item = currentList[position]
@@ -35,7 +35,7 @@ open class CompositeAdapter(
         holder.onBind(currentList[position])
     }
 
-    class CompositeDiffUtil : DiffUtil.ItemCallback<CompositeItem>() {
+    object CompositeDiffUtil : DiffUtil.ItemCallback<CompositeItem>() {
 
         override fun areItemsTheSame(oldItem: CompositeItem, newItem: CompositeItem): Boolean {
             return oldItem.id == newItem.id
@@ -48,7 +48,7 @@ open class CompositeAdapter(
 
     }
 
-    open class Builder {
+    class Builder {
 
         private var delegates: MutableList<CompositeDelegate<*, *>> = mutableListOf()
 
@@ -57,7 +57,7 @@ open class CompositeAdapter(
             return this
         }
 
-        open fun build(): CompositeAdapter {
+        fun build(): CompositeAdapter {
             if (delegates.isEmpty()) throw IllegalStateException("Add at least one delegate!")
 
             return CompositeAdapter(delegates)

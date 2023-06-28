@@ -1,17 +1,21 @@
-package com.example.core_android.deleagates_adapter
+package com.example.core_android.delegate_adapter
 
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
-import com.example.core_android.deleagates_adapter.delegate.CompositeDelegate
+import com.example.core_android.delegate_adapter.delegate.CompositeDelegate
+import com.example.core_android.delegate_adapter.delegate.CompositeItem
 
-typealias PageRequest = (page: Int, pageSize: Int) -> Unit
+fun interface PageRequest {
+    fun nextPage(page: Int, pageSize: Int)
+}
 
-class CompositePagingAdapter(
+class CompositePagingAdapter internal constructor(
     delegates: List<CompositeDelegate<*, *>>,
     private val pageSize: Int = DEFAULT_PAGE_SIZE,
     private val preloadCount: Int = pageSize / 2,
-    private val nextPageRequest: PageRequest
+    private val pageRequest: PageRequest
 ) : CompositeAdapter(delegates) {
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -31,14 +35,14 @@ class CompositePagingAdapter(
 
         })
 
-        nextPageRequest(0, pageSize)
+        pageRequest.nextPage(0, pageSize)
     }
 
     private fun nextPageHandler(lastVisibleIndex: Int, itemsCount: Int) {
         val lastItems = itemsCount - lastVisibleIndex + 1
         if (lastItems <= preloadCount) {
             val nextPage = (itemsCount / pageSize) + 1
-            nextPageRequest(nextPage, pageSize)
+            pageRequest.nextPage(nextPage, pageSize)
         }
     }
 
@@ -65,7 +69,7 @@ class CompositePagingAdapter(
             return this
         }
 
-        fun build(): CompositeAdapter {
+        fun build(): CompositePagingAdapter {
             if (delegates.isEmpty()) throw IllegalStateException("Add at least one delegate!")
 
             return CompositePagingAdapter(

@@ -2,8 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="350dp"
     android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:background="@android:color/white">
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -33,7 +34,7 @@
         tools:text="Какой-то длинный текст алерта не в одну строку!" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnRight"
+        android:id="@+id/btnConfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -47,7 +48,7 @@
         tools:text="Правая кнопка" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnLeft"
+        android:id="@+id/btnCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -56,7 +57,7 @@
         android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnRight"
+        app:layout_constraintEnd_toStartOf="@id/btnConfirm"
         app:layout_constraintTop_toBottomOf="@id/tvMessage"
         tools:text="Левая кнопка" />
 

@@ -1,6 +1,6 @@
 package com.example.feature_cats_list.list.ui.models
 
-import com.example.core_android.deleagates_adapter.delegate.CompositeItem
+import com.example.core_android.delegate_adapter.delegate.CompositeItem
 
 sealed class CatListItem(override val id: String): CompositeItem {
 

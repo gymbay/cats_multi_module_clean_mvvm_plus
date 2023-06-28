@@ -3,8 +3,8 @@ package com.example.feature_cats_list.list.ui.delegates
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import coil.load
-import com.example.core_android.deleagates_adapter.delegate.CompositeDelegate
-import com.example.core_android.deleagates_adapter.delegate.CompositeItem
+import com.example.core_android.delegate_adapter.delegate.CompositeDelegate
+import com.example.core_android.delegate_adapter.delegate.CompositeItem
 import com.example.feature_cats_list.databinding.CatsListItemBinding
 import com.example.feature_cats_list.list.ui.models.CatListItem
 

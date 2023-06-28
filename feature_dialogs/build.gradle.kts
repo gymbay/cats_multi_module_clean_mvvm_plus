@@ -1,7 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.android.kotlin)
+    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -37,7 +38,5 @@ android {
 }
 
 dependencies {
-    kapt(libs.dagger.compiler)
-
     implementation(project(":core_android"))
 }

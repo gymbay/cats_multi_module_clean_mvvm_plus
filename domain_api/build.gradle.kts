@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.android.kotlin)
+    alias(libs.plugins.kotlin.android)
 }
 
 android {
@@ -33,7 +33,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":domain_models"))
+    api(project(":domain_models"))
 
     testImplementation(libs.test.junit)
 }

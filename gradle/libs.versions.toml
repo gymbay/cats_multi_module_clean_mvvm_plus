@@ -15,7 +15,7 @@ coilVersion = "2.4.0"
 junit = "4.13.2"
 
 androidGradlePlugin = "8.0.2"
-androidKotlin = "1.8.20"
+kotlinAndroid = "1.8.20"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx" }
@@ -40,6 +40,6 @@ test-junit = { group = "junit", name = "junit", version.ref = "junit" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
-android-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "androidKotlin" }
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "androidKotlin" }
-#kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "androidKotlin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinAndroid" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlinAndroid" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlinAndroid" }

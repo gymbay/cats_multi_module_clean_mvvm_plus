@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core_android.architecture.collectOnStart
-import com.example.core_android.deleagates_adapter.CompositeAdapter
-import com.example.core_android.deleagates_adapter.CompositePagingAdapter
+import com.example.core_android.delegate_adapter.CompositePagingAdapter
 import com.example.core_android.delegates.featureStore
 import com.example.core_android.delegates.lazyViewModel
 import com.example.feature_cats_list.R
@@ -17,6 +16,7 @@ import com.example.feature_cats_list.databinding.CatsListFragmentBinding
 import com.example.feature_cats_list.list.ui.converters.CatsListUiConverter
 import com.example.feature_cats_list.list.ui.delegates.CatsDelegate
 import com.example.feature_cats_list.list.ui.delegates.LoadingDelegate
+import com.example.feature_dialogs.alert.ui.extensions.showAlert
 import kotlinx.coroutines.flow.onEach
 import kotlin.properties.Delegates
 
@@ -28,7 +28,7 @@ internal class CatsListFragment : Fragment() {
         store.catsListSubcomponent.viewModel
     }
 
-    private var adapter: CompositeAdapter by Delegates.notNull()
+    private var adapter: CompositePagingAdapter by Delegates.notNull()
 
     private val uiConverter = CatsListUiConverter()
 
@@ -47,6 +47,7 @@ internal class CatsListFragment : Fragment() {
         initAdapter()
 
         viewModel.state.onEach(::handleState).collectOnStart(viewLifecycleOwner)
+        viewModel.action.onEach(::handleAction).collectOnStart(viewLifecycleOwner)
     }
 
     private fun initAdapter() {
@@ -63,6 +64,12 @@ internal class CatsListFragment : Fragment() {
     private fun handleState(state: CatsListViewModel.UiState) {
         val convertedState = uiConverter.convertTo(state.cats, state.isLoading)
         adapter.submitList(convertedState)
+    }
+
+    private fun handleAction(action: CatsListViewModel.Actions) {
+        when (action) {
+            is CatsListViewModel.Actions.ShowAlert -> showAlert(action.alert)
+        }
     }
 
     override fun onDestroyView() {
