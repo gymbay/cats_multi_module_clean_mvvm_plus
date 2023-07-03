@@ -8,7 +8,9 @@ import com.example.core_android.delegate_adapter.delegate.CompositeItem
 import com.example.feature_cats_list.databinding.CatsListItemBinding
 import com.example.feature_cats_list.list.ui.models.CatListItem
 
-class CatsDelegate : CompositeDelegate<CatListItem.Cat, CatsListItemBinding>() {
+class CatsDelegate(
+    private val onClick: (id: String) -> Unit
+) : CompositeDelegate<CatListItem.Cat, CatsListItemBinding>() {
 
     override fun canUseForViewType(item: CompositeItem) = item is CatListItem.Cat
 
@@ -19,6 +21,9 @@ class CatsDelegate : CompositeDelegate<CatListItem.Cat, CatsListItemBinding>() {
 
     override fun CatsListItemBinding.bind(item: CatListItem.Cat) {
         ivCat.load(item.url)
+        root.setOnClickListener {
+            onClick(item.id)
+        }
     }
 
 }

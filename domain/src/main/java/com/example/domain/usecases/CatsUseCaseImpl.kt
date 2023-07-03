@@ -14,4 +14,8 @@ class CatsUseCaseImpl @Inject constructor(
         return catsRepository.getCats(filter)
     }
 
+    override suspend fun getCat(catId: String): CatModel {
+        return catsRepository.getCat(catId)
+    }
+
 }

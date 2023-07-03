@@ -4,9 +4,9 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class AlertData(
-    val title: String? = null,
-    val message: String? = null,
-    val btnCancelTitle: String? = null,
-    val btnConfirmTitle: String? = null,
+internal data class AlertData(
+    val title: String?,
+    val message: String?,
+    val btnCancelTitle: String?,
+    val btnConfirmTitle: String?,
 ) : Parcelable

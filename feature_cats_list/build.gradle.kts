@@ -42,6 +42,7 @@ dependencies {
     implementation(project(":core_android"))
     implementation(project(":domain_api"))
     implementation(project(":feature_dialogs"))
+    implementation(project(":feature_cats_details:navigation"))
 
     testImplementation(libs.test.junit)
 }

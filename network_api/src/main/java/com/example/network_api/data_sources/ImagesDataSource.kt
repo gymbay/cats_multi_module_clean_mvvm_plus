@@ -7,4 +7,6 @@ interface ImagesDataSource {
 
     suspend fun getImages(filter: CatsFilter): List<CatModel>
 
+    suspend fun getImage(imageId: String): CatModel
+
 }

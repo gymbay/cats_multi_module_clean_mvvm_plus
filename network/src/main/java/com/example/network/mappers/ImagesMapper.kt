@@ -13,6 +13,8 @@ class ImagesMapper {
 
     fun mapTo(images: List<Image>): List<CatModel> = images.map(::convert)
 
+    fun mapTo(image: Image): CatModel = convert(image)
+
     private fun convert(image: Image): CatModel {
         return CatModel(
             id = image.id ?: throw error("image.id"),
@@ -33,6 +35,7 @@ class ImagesMapper {
             origin = breed.origin ?: throw error("breed.origin"),
             description = breed.description ?: throw error("breed.description"),
             wikipediaURL = breed.wikipediaURL,
+            lifeSpan = breed.lifeSpan ?: throw error("breed.lifeSpan")
         )
     }
 

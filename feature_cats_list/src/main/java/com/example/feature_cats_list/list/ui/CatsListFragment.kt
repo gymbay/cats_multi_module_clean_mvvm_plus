@@ -17,6 +17,7 @@ import com.example.feature_cats_list.list.ui.converters.CatsListUiConverter
 import com.example.feature_cats_list.list.ui.delegates.CatsDelegate
 import com.example.feature_cats_list.list.ui.delegates.LoadingDelegate
 import com.example.feature_dialogs.alert.ui.extensions.showAlert
+import com.example.navigation.navigateToCatDetails
 import kotlinx.coroutines.flow.onEach
 import kotlin.properties.Delegates
 
@@ -53,7 +54,7 @@ internal class CatsListFragment : Fragment() {
     private fun initAdapter() {
         adapter = CompositePagingAdapter
             .Builder(viewModel::nextPage)
-            .add(CatsDelegate())
+            .add(CatsDelegate(viewModel::onCatClick))
             .add(LoadingDelegate())
             .build()
 
@@ -62,13 +63,14 @@ internal class CatsListFragment : Fragment() {
     }
 
     private fun handleState(state: CatsListViewModel.UiState) {
-        val convertedState = uiConverter.convertTo(state.cats, state.isLoading)
-        adapter.submitList(convertedState)
+        val uiModel = uiConverter.convertTo(state.cats, state.isLoading)
+        adapter.submitList(uiModel)
     }
 
     private fun handleAction(action: CatsListViewModel.Actions) {
         when (action) {
-            is CatsListViewModel.Actions.ShowAlert -> showAlert(action.alert)
+            is CatsListViewModel.Actions.ShowAlert -> showAlert(message = action.message)
+            is CatsListViewModel.Actions.ToCatDetails -> navigateToCatDetails(action.catId)
         }
     }
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/featureCatDetails"
+    app:startDestination="@id/catDetailsFragment">
+
+    <fragment
+        android:id="@+id/catDetailsFragment"
+        android:name="com.example.feature_cats_details.details.ui.CatDetailsFragment"
+        android:label="@string/feature_cat_details_title"
+        tools:layout="@layout/fragment_cat_details">
+
+        <deepLink app:uri="@string/navigation_feature_cats_details_deeplink" />
+
+    </fragment>
+
+</navigation>

@@ -21,4 +21,9 @@ class ImagesDataSourceImpl @Inject constructor(
         return imagesMapper.mapTo(catsImages)
     }
 
+    override suspend fun getImage(imageId: String): CatModel {
+        val image = imagesApi.getImage(imageId)
+        return imagesMapper.mapTo(image)
+    }
+
 }

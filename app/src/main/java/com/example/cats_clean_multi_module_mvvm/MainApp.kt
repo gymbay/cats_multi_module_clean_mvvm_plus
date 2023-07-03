@@ -6,9 +6,9 @@ import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
-import coil.imageLoader
 import com.example.cats_clean_multi_module_mvvm.di.AppComponent
 import com.example.cats_clean_multi_module_mvvm.di.DaggerAppComponent
+import com.example.feature_cats_details.common.di.CatDetailsDependenciesProvider
 import com.example.feature_cats_list.common.di.FeatureCatsListDependenciesProvider
 
 class MainApp: Application(), ImageLoaderFactory {
@@ -24,6 +24,7 @@ class MainApp: Application(), ImageLoaderFactory {
         super.onCreate()
 
         FeatureCatsListDependenciesProvider.dependencies = appComponent
+        CatDetailsDependenciesProvider.dependencies = appComponent
     }
 
     override fun newImageLoader(): ImageLoader {

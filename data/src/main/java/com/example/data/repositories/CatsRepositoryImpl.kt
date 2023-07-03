@@ -14,4 +14,8 @@ class CatsRepositoryImpl @Inject constructor(
         return imagesDataSource.getImages(filter)
     }
 
+    override suspend fun getCat(catId: String): CatModel {
+        return imagesDataSource.getImage(catId)
+    }
+
 }

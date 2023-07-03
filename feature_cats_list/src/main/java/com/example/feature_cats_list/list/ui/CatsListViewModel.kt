@@ -7,8 +7,6 @@ import com.example.domain_api.usecases.CatsUseCase
 import com.example.domain_models.request.CatsFilter
 import com.example.domain_models.request.Order
 import com.example.domain_models.response.CatModel
-import com.example.feature_cats_list.R
-import com.example.feature_dialogs.alert.ui.models.AlertData
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,9 +30,10 @@ internal class CatsListViewModel @Inject constructor(
                 val currentCats = getState().cats
                 val newCats = catsUseCase.getCats(
                     CatsFilter(
-                        pageSize,
-                        page,
-                        Order.RAND
+                        limit = pageSize,
+                        page = page,
+                        order = Order.RAND,
+                        hasBreeds = true,
                     )
                 )
 
@@ -45,18 +44,22 @@ internal class CatsListViewModel @Inject constructor(
                 val allCats = currentCats + newCats
 
                 modifyState { copy(cats = allCats) }
-                throw Exception("Test")
             } catch (e: Exception) {
                 e.printStackTrace()
 
-                val alert = AlertData(
-                    message = resources.getString(R.string.feature_cats_error)
+                onAction(
+                    Actions.ShowAlert(
+                        resources.getString(com.example.core_android.R.string.service_not_available)
+                    )
                 )
-                onAction(Actions.ShowAlert(alert))
             }
 
             modifyState { copy(isLoading = false) }
         }
+    }
+
+    fun onCatClick(catId: String) {
+        onAction(Actions.ToCatDetails(catId))
     }
 
     data class UiState(
@@ -65,7 +68,8 @@ internal class CatsListViewModel @Inject constructor(
     )
 
     sealed interface Actions {
-        data class ShowAlert(val alert: AlertData) : Actions
+        data class ShowAlert(val message: String) : Actions
+        data class ToCatDetails(val catId: String) : Actions
     }
 
 }

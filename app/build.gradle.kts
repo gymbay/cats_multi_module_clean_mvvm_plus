@@ -46,6 +46,7 @@ dependencies {
     implementation(project(":data_api"))
 
     implementation(project(":feature_cats_list"))
+    implementation(project(":feature_cats_details"))
 
     testImplementation(libs.test.junit)
 }

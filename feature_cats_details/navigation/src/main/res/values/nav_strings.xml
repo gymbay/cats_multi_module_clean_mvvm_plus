@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="navigation_feature_cats_details_deeplink">cats-app://com.example.cats/cat_details_fragment/{CatId}</string>
+
+</resources>

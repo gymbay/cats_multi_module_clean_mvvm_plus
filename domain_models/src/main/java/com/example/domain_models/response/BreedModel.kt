@@ -8,4 +8,5 @@ data class BreedModel(
     val origin: String,
     val description: String,
     val wikipediaURL: String?,
+    val lifeSpan: String?,
 )

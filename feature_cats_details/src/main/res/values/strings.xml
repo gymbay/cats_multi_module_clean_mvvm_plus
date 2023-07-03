@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="feature_cat_details_title">Котик</string>
+
+    <string name="feature_cat_details_no_info">нет информации</string>
+    <string name="feature_cat_label_origin">Вывели в %s</string>
+    <string name="feature_cat_label_weight">Примерный вес %s кг</string>
+    <string name="feature_cat_label_temperament">Отличается качествами %s</string>
+    <string name="feature_cat_label_life_span">Продолжительность жизни %s лет</string>
+
+</resources>

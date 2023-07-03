@@ -1,6 +1,6 @@
 package com.example.feature_dialogs.alert.ui.models
 
-object AlertConstants {
+internal object AlertConstants {
     const val ALERT_DATA_MODEL_KEY = "ALERT_DATA_MODEL_KEY"
     const val ALERT_DIALOG_TAG = "ALERT_DIALOG_TAG"
 
