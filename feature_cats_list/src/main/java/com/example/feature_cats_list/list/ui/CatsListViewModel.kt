@@ -1,8 +1,8 @@
 package com.example.feature_cats_list.list.ui
 
-import android.content.res.Resources
 import androidx.lifecycle.viewModelScope
 import com.example.core_android.architecture.BaseViewModel
+import com.example.core_android.providers.StringProvider
 import com.example.domain_api.usecases.CatsUseCase
 import com.example.domain_models.request.CatsFilter
 import com.example.domain_models.request.Order
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 internal class CatsListViewModel @Inject constructor(
     private val catsUseCase: CatsUseCase,
-    private val resources: Resources
+    private val stringProvider: StringProvider
 ) : BaseViewModel<CatsListViewModel.UiState, CatsListViewModel.Actions>(UiState()) {
 
     private var allCatsLoaded: Boolean = false
@@ -49,7 +49,7 @@ internal class CatsListViewModel @Inject constructor(
 
                 onAction(
                     Actions.ShowAlert(
-                        resources.getString(com.example.core_android.R.string.service_not_available)
+                        stringProvider.getString(com.example.core_android.R.string.service_not_available)
                     )
                 )
             }

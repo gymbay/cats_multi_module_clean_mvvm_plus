@@ -1,11 +1,10 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
-    namespace = "com.example.feature_cats_list"
+    namespace = "com.example.test_utils"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
@@ -37,14 +36,8 @@ android {
 }
 
 dependencies {
-    kapt(libs.dagger.compiler)
-
     implementation(project(":core_android"))
-    implementation(project(":domain_api"))
-    implementation(project(":feature_dialogs"))
-    implementation(project(":feature_cats_details:navigation"))
 
-    testImplementation(project(":test_utils"))
-    testImplementation(libs.test.junit)
-    testImplementation(libs.test.kotlin.coroutines)
+    api(libs.test.junit)
+    api(libs.test.kotlin.coroutines)
 }

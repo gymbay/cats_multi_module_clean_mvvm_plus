@@ -1,4 +1,4 @@
-package com.example.cats_clean_multi_module_mvvm.di.network
+package com.example.cats_clean_multi_module_mvvm.di.modules.network
 
 import com.example.core.annotations.AppScope
 import com.example.network.api.ImagesApi
