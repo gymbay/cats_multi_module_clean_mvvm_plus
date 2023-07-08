@@ -1,5 +1,6 @@
 package com.example.feature_cats_list.list.ui
 
+import com.example.core_android.architecture.BaseViewModel
 import com.example.core_android.providers.StringProvider
 import com.example.domain_api.usecases.CatsUseCase
 import com.example.domain_models.request.CatsFilter
@@ -8,7 +9,9 @@ import com.example.test_utils.MainDispatcherRule
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -65,22 +68,34 @@ internal class CatsListViewModelTest {
 
     private val viewModel = CatsListViewModel(catsUseCase, stringProvider)
 
+    @Before
+    fun setUp() {
+        BaseViewModel.turnOnTestMode()
+    }
+
     @Test
-    fun test_success_loading_pages() = runTest {
-        val initialState = viewModel.state.first()
-        assertEquals(0, initialState.cats.size)
-
+    fun test_success_loading_first_page() = runTest {
         viewModel.nextPage(0, 1)
-        val firstPageState = viewModel.state.first()
 
-        assertEquals(1, firstPageState.cats.size)
-        assertEquals(expectedFirstCatId, firstPageState.cats.firstOrNull()?.id)
+        val stateLog = viewModel.getStateLog()
 
+        assertTrue(stateLog[0].isLoading)
+        assertEquals(expectedFirstCatId, stateLog[1].cats.firstOrNull()?.id)
+        assertFalse(stateLog[2].isLoading)
+    }
+
+    @Test
+    fun test_success_loading_second_page() = runTest {
+        viewModel.nextPage(0, 1)
+        viewModel.clearStateLog()
         viewModel.nextPage(1, 1)
-        val secondPageState = viewModel.state.first()
 
-        assertEquals(2, secondPageState.cats.size)
-        assertEquals(expectedSecondCatId, secondPageState.cats.lastOrNull()?.id)
+        val stateLog = viewModel.getStateLog()
+
+        assertTrue(stateLog[0].isLoading)
+        assertEquals(2, stateLog[1].cats.size)
+        assertEquals(expectedSecondCatId, stateLog[1].cats.lastOrNull()?.id)
+        assertFalse(stateLog[2].isLoading)
     }
 
     @Test

@@ -45,6 +45,4 @@ dependencies {
     implementation(project(":feature_cats_details:navigation"))
 
     testImplementation(project(":test_utils"))
-    testImplementation(libs.test.junit)
-    testImplementation(libs.test.kotlin.coroutines)
 }

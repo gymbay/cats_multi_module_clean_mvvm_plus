@@ -1,8 +1,8 @@
 package com.example.feature_cats_details.details.ui
 
-import android.content.res.Resources
 import androidx.lifecycle.viewModelScope
 import com.example.core_android.architecture.BaseViewModel
+import com.example.core_android.providers.StringProvider
 import com.example.domain_api.usecases.CatsUseCase
 import com.example.domain_models.response.CatModel
 import dagger.assisted.Assisted
@@ -13,16 +13,16 @@ import kotlinx.coroutines.launch
 internal class CatDetailsViewModel @AssistedInject constructor(
     @Assisted private val catId: String,
     private val catsUseCase: CatsUseCase,
-    private val resources: Resources
+    private val stringProvider: StringProvider
 ) : BaseViewModel<CatDetailsViewModel.UIState, CatDetailsViewModel.Actions>(
     UIState()
 ) {
 
     init {
-        startCatLoading(catId)
+        loadCat(catId)
     }
 
-    private fun startCatLoading(catId: String) = viewModelScope.launch {
+    private fun loadCat(catId: String) = viewModelScope.launch {
         modifyState { copy(isLoading = true) }
 
         try {
@@ -30,7 +30,7 @@ internal class CatDetailsViewModel @AssistedInject constructor(
             modifyState { copy(catModel = cat) }
         } catch (e: Exception) {
             e.printStackTrace()
-            val error = resources.getString(com.example.core_android.R.string.service_not_available)
+            val error = stringProvider.getString(com.example.core_android.R.string.service_not_available)
             onAction(Actions.ShowAlert(error))
         }
 

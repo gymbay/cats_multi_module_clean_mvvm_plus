@@ -45,5 +45,5 @@ dependencies {
 
     implementation(project(":feature_cats_details:navigation"))
 
-    testImplementation(libs.test.junit)
+    testImplementation(project(":test_utils"))
 }

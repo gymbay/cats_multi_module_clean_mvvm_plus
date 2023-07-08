@@ -1,5 +1,6 @@
 package com.example.core_android.architecture
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.*
 
@@ -7,6 +8,8 @@ abstract class BaseViewModel<State, Actions>(initialState: State) : ViewModel() 
 
     private val _state: MutableStateFlow<State> = MutableStateFlow(initialState)
     val state: Flow<State> = _state
+
+    private val _stateLog by lazy { mutableListOf<State>() }
 
     /**
      * replay = 1 и _action.resetReplayCache()
@@ -28,7 +31,23 @@ abstract class BaseViewModel<State, Actions>(initialState: State) : ViewModel() 
      * Example: modifyState { copy(loginError = "Ошибка!") }
      */
     protected fun modifyState(block: State.() -> State) {
-        _state.update { state -> block(state) }
+        if (testMode) {
+            _stateLog.add(_state.updateAndGet(block))
+        } else {
+            _state.update(block)
+        }
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun getStateLog(): List<State> {
+        if (!testMode) throw IllegalStateException("Invoke turnOnTestMode() before!")
+        return _stateLog
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun clearStateLog() {
+        if (!testMode) throw IllegalStateException("Invoke turnOnTestMode() before!")
+        _stateLog.clear()
     }
 
     /**
@@ -40,6 +59,17 @@ abstract class BaseViewModel<State, Actions>(initialState: State) : ViewModel() 
 
     interface Factory<T, V : ViewModel> {
         fun create(state: T): V
+    }
+
+    companion object {
+
+        private var testMode = false
+
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        fun turnOnTestMode() {
+            testMode = true
+        }
+
     }
 
 }
